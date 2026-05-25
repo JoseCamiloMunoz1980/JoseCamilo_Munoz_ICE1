@@ -29,7 +29,7 @@ public class CardTrick {
 
         Card luckyCard = new Card(2, "Clubs");
 
-        System.out.println("=== Magic Hand ===");
+        System.out.println("=== Cards ===");
 
         for (Card card : magicHand) {
             System.out.println(card.getValue() + " of " + card.getSuit());
