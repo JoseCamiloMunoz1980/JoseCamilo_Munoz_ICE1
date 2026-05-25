@@ -33,7 +33,7 @@ public class CardTrick {
             magicHand[i] = c;
         }
 
-        System.out.println("=== Magic Hand ===");
+        System.out.println("=== Cards ===");
 
         for (Card card : magicHand) {
             System.out.println(card.getValue() + " of " + card.getSuit());
@@ -126,7 +126,7 @@ public class CardTrick {
             System.out.println("Your card is NOT in the hand.");
         }
 
-        k.close(); 
+        k.close();
         // add one luckcard hard code 2,clubs
     }
     
