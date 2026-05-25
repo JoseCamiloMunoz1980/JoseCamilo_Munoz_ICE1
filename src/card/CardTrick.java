@@ -126,8 +126,10 @@ public class CardTrick {
             System.out.println("Your card is NOT in the hand.");
         }
 
+        int luckyIndex = rand.nextInt(7);
+        magicHand[luckyIndex] = new Card(2, "Clubs");
+
         k.close();
-        // add one luckcard hard code 2,clubs
     }
     
 }
