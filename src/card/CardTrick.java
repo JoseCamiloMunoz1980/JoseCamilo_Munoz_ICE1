@@ -17,70 +17,100 @@ public class CardTrick {
     
     public static void main(String[] args)
     {
-        Card[] magicHand = new Card[7]; //array of objects
+        Card[] magicHand = new Card[7];
         Random rand = new Random();
-        
-        
-        for (int i=0; i<magicHand.length; i++)
-        {
-            //Card c = new Card();
-            //c.setValue(insert call to random number generator here)
-            int randomValue = rand.nextInt(13)+1;
-            //c.setSuit(Card.SUITS[insert call to random number between 0-3 here])
+
+        for (int i = 0; i < magicHand.length; i++) {
+
+            Card c = new Card();
+
+            int randomValue = rand.nextInt(13) + 1;
             String suit = Card.SUITS[rand.nextInt(Card.SUITS.length)];
 
-            magicHand[i] = new Card(randomValue, suit);                        
+            c.setValue(randomValue);
+            c.setSuit(suit);
+
+            magicHand[i] = c;
         }
+
         System.out.println("=== Magic Hand ===");
+
         for (Card card : magicHand) {
             System.out.println(card.getValue() + " of " + card.getSuit());
         }
-        //insert code to ask the user for Card value and suit, create their card
-        Scanner k = new Scanner(System.in);
-        int userValue;
 
-        while (true) {
+        Scanner k = new Scanner(System.in);
+
+        int userValue = -1;
+        boolean validValue = false;
+
+        while (!validValue) {
+
             System.out.print("Enter card value (1-13): ");
 
             if (k.hasNextInt()) {
                 userValue = k.nextInt();
 
                 if (userValue >= 1 && userValue <= 13) {
-                    break;
+                    validValue = true;
+                } else {
+                    System.out.println("Invalid value.");
                 }
-            } else {
-                k.next(); 
-            }
 
-            System.out.println("Invalid value.");
+            } else {
+                k.next();
+                System.out.println("Invalid input.");
+            }
         }
 
         k.nextLine();
 
-        String userSuit;
+        String userSuit = "";
+        boolean validSuit = false;
 
-        while (true) {
-            System.out.print("Enter suit (Hearts, Diamonds, Clubs, Spades): ");
-            userSuit = k.nextLine();
+        while (!validSuit) {
 
-            boolean validSuit =
-                userSuit.equalsIgnoreCase("Hearts") ||
-                userSuit.equalsIgnoreCase("Diamonds") ||
-                userSuit.equalsIgnoreCase("Clubs") ||
-                userSuit.equalsIgnoreCase("Spades");
+            System.out.print("Enter suit (1-Hearts, 2-Diamonds, 3-Clubs, 4-Spades OR name): ");
+            String input = k.nextLine().trim();
 
-            if (validSuit) {
-                break;
+            switch (input.toLowerCase()) {
+
+                case "1":
+                case "hearts":
+                    userSuit = "Hearts";
+                    validSuit = true;
+                    break;
+
+                case "2":
+                case "diamonds":
+                    userSuit = "Diamonds";
+                    validSuit = true;
+                    break;
+
+                case "3":
+                case "clubs":
+                    userSuit = "Clubs";
+                    validSuit = true;
+                    break;
+
+                case "4":
+                case "spades":
+                    userSuit = "Spades";
+                    validSuit = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid suit.");
             }
-
-            System.out.println("Invalid suit.");
         }
 
-        Card userCard = new Card(userValue, userSuit);
-        
-        // and search magicHand here
+        Card userCard = new Card();
+        userCard.setValue(userValue);
+        userCard.setSuit(userSuit);
+
         boolean found = false;
         int i = 0;
+
         while (i < magicHand.length && !found) {
 
             if (magicHand[i].matches(userCard)) {
@@ -89,8 +119,14 @@ public class CardTrick {
 
             i++;
         }
-        k.close();
-        //Then report the result here
+        
+        if (found) {
+            System.out.println("Your card IS in the hand.");
+        } else {
+            System.out.println("Your card is NOT in the hand.");
+        }
+
+        k.close(); 
         // add one luckcard hard code 2,clubs
     }
     
