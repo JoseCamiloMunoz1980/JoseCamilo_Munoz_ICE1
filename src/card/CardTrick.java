@@ -22,113 +22,40 @@ public class CardTrick {
 
         for (int i = 0; i < magicHand.length; i++) {
 
-            Card c = new Card();
-
             int randomValue = rand.nextInt(13) + 1;
             String suit = Card.SUITS[rand.nextInt(Card.SUITS.length)];
 
-            c.setValue(randomValue);
-            c.setSuit(suit);
-
-            magicHand[i] = c;
+            magicHand[i] = new Card(randomValue, suit);
         }
 
-        System.out.println("=== Cards ===");
+        Card luckyCard = new Card(2, "Clubs");
+
+        System.out.println("=== Magic Hand ===");
 
         for (Card card : magicHand) {
             System.out.println(card.getValue() + " of " + card.getSuit());
         }
 
-        Scanner k = new Scanner(System.in);
-
-        int userValue = -1;
-        boolean validValue = false;
-
-        while (!validValue) {
-
-            System.out.print("Enter card value (1-13): ");
-
-            if (k.hasNextInt()) {
-                userValue = k.nextInt();
-
-                if (userValue >= 1 && userValue <= 13) {
-                    validValue = true;
-                } else {
-                    System.out.println("Invalid value.");
-                }
-
-            } else {
-                k.next();
-                System.out.println("Invalid input.");
-            }
-        }
-
-        k.nextLine();
-
-        String userSuit = "";
-        boolean validSuit = false;
-
-        while (!validSuit) {
-
-            System.out.print("Enter suit (1-Hearts, 2-Diamonds, 3-Clubs, 4-Spades OR name): ");
-            String input = k.nextLine().trim();
-
-            switch (input.toLowerCase()) {
-
-                case "1":
-                case "hearts":
-                    userSuit = "Hearts";
-                    validSuit = true;
-                    break;
-
-                case "2":
-                case "diamonds":
-                    userSuit = "Diamonds";
-                    validSuit = true;
-                    break;
-
-                case "3":
-                case "clubs":
-                    userSuit = "Clubs";
-                    validSuit = true;
-                    break;
-
-                case "4":
-                case "spades":
-                    userSuit = "Spades";
-                    validSuit = true;
-                    break;
-
-                default:
-                    System.out.println("Invalid suit.");
-            }
-        }
-
-        Card userCard = new Card();
-        userCard.setValue(userValue);
-        userCard.setSuit(userSuit);
+        System.out.println("\n=== Lucky Card ===");
+        System.out.println(luckyCard.getValue() + " of " + luckyCard.getSuit());
 
         boolean found = false;
         int i = 0;
 
         while (i < magicHand.length && !found) {
 
-            if (magicHand[i].matches(userCard)) {
+            if (magicHand[i].matches(luckyCard)) {
                 found = true;
             }
 
             i++;
         }
-        
+
         if (found) {
-            System.out.println("Your card IS in the hand.");
+            System.out.println("\nYOU WIN! Lucky card is in the hand.");
         } else {
-            System.out.println("Your card is NOT in the hand.");
+            System.out.println("\nYOU LOSE! Lucky card is not in the hand.");
         }
-
-        int luckyIndex = rand.nextInt(7);
-        magicHand[luckyIndex] = new Card(2, "Clubs");
-
         k.close();
     }
     
